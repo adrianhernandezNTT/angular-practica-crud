@@ -1,0 +1,29 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^3.3.1"
+  },
+  "devDependencies": {
+    "vite": "^7.1.7",
+    "prettier": "^3.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-lit": "^1.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^13.0.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,css,scss,html}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
