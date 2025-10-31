@@ -1,131 +1,174 @@
-import { LitElement, css, html } from 'lit'
-import litLogo from './assets/lit.svg'
-import viteLogo from '/vite.svg'
+import { LitElement, css, html } from 'lit';
+import './components/my-button.js';
+import './components/home/home-component.js';
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 export class MyElement extends LitElement {
-  static get properties() {
-    return {
-      /**
-       * Copy for the read the docs hint.
-       */
-      docsHint: { type: String },
-
-      /**
-       * The number of times the button has been clicked.
-       */
-      count: { type: Number },
-    }
-  }
+  static properties = {
+    darkMode: { type: Boolean, reflect: true },
+  };
 
   constructor() {
-    super()
-    this.docsHint = 'Click on the Vite and Lit logos to learn more'
-    this.count = 0
+    super();
+    // Detecta si el usuario tiene preferencia por tema oscuro
+    this.darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  toggleTheme() {
+    this.darkMode = !this.darkMode;
   }
 
   render() {
     return html`
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src=${viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://lit.dev" target="_blank">
-          <img src=${litLogo} class="logo lit" alt="Lit logo" />
-        </a>
-      </div>
-      <slot></slot>
-      <div class="card">
-        <button @click=${this._onClick} part="button">
-          count is ${this.count}
+      <header>
+        <h1>🌐 CRUD Demo</h1>
+        <button class="theme-toggle" @click=${this.toggleTheme}>
+          ${this.darkMode ? '☀️ Modo claro' : '🌙 Modo oscuro'}
         </button>
-      </div>
-      <p class="read-the-docs">${this.docsHint}</p>
-    `
+      </header>
+
+      <main>
+        <section class="content">
+          <!-- Componente Home -->
+          <home-component></home-component>
+
+          <!-- Botones reutilizables -->
+          <div class="buttons">
+            <my-button variant="primary">Guardar</my-button>
+            <my-button variant="secondary">Cancelar</my-button>
+            <my-button variant="danger" ?disabled=${true}>Eliminar</my-button>
+          </div>
+
+          <div class="placeholder">
+            <p>🧱 Zona de componentes CRUD (en construcción)</p>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>Hecho con ❤️ por <strong>Adrián Hernández</strong> | NTT DATA</p>
+      </footer>
+    `;
   }
 
-  _onClick() {
-    this.count++
-  }
+  static styles = css`
+    :host {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color-scheme: light dark;
+      font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-  static get styles() {
-    return css`
-      :host {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 2rem;
-        text-align: center;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--header-bg);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .theme-toggle {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background: var(--button-bg);
+      color: var(--button-text);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .content {
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .placeholder {
+      margin-top: 2rem;
+      padding: 2rem;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      background: var(--card-bg);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: var(--footer-text);
+      border-top: 1px solid var(--border);
+      background: var(--footer-bg);
+    }
+
+    /* 🌞 Modo claro */
+    :host(:not([darkMode])) {
+      --bg: #f9fafb;
+      --text: #1f2937;
+      --header-bg: #ffffff;
+      --button-bg: #2563eb;
+      --button-text: #ffffff;
+      --border: #e5e7eb;
+      --card-bg: #ffffff;
+      --footer-bg: #f3f4f6;
+      --footer-text: #4b5563;
+    }
+
+    /* 🌙 Modo oscuro */
+    :host([darkMode]) {
+      --bg: #18181b;
+      --text: #e4e4e7;
+      --header-bg: #27272a;
+      --button-bg: #3b82f6;
+      --button-text: #ffffff;
+      --border: #3f3f46;
+      --card-bg: #1f1f22;
+      --footer-bg: #27272a;
+      --footer-text: #a1a1aa;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 0.5rem;
       }
 
-      .logo {
-        height: 6em;
-        padding: 1.5em;
-        will-change: filter;
-        transition: filter 300ms;
+      main {
+        padding: 2rem 1rem;
       }
-      .logo:hover {
-        filter: drop-shadow(0 0 2em #646cffaa);
-      }
-      .logo.lit:hover {
-        filter: drop-shadow(0 0 2em #325cffaa);
-      }
-
-      .card {
-        padding: 2em;
-      }
-
-      .read-the-docs {
-        color: #888;
-      }
-
-      a {
-        font-weight: 500;
-        color: #646cff;
-        text-decoration: inherit;
-      }
-      a:hover {
-        color: #535bf2;
-      }
-
-      ::slotted(h1) {
-        font-size: 3.2em;
-        line-height: 1.1;
-      }
-
-      button {
-        border-radius: 8px;
-        border: 1px solid transparent;
-        padding: 0.6em 1.2em;
-        font-size: 1em;
-        font-weight: 500;
-        font-family: inherit;
-        background-color: #1a1a1a;
-        cursor: pointer;
-        transition: border-color 0.25s;
-      }
-      button:hover {
-        border-color: #646cff;
-      }
-      button:focus,
-      button:focus-visible {
-        outline: 4px auto -webkit-focus-ring-color;
-      }
-
-      @media (prefers-color-scheme: light) {
-        a:hover {
-          color: #747bff;
-        }
-        button {
-          background-color: #f9f9f9;
-        }
-      }
-    `
-  }
+    }
+  `;
 }
 
-window.customElements.define('my-element', MyElement)
+customElements.define('my-element', MyElement);

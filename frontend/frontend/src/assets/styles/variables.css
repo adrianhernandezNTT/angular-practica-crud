@@ -1,0 +1,12 @@
+:root {
+  --color-primary: #4f46e5;
+  --color-secondary: #22d3ee;
+  --color-bg: #f9fafb;
+  --color-text: #111827;
+  --color-muted: #6b7280;
+
+  --font-main: 'Inter', sans-serif;
+
+  --radius: 0.75rem;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
