@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import '../breadcrumb/breadcrumb-component.js'; // Importamos breadcrumb
 
 export class TableComponent extends LitElement {
   static properties = { data: { type: Array } };
@@ -13,6 +14,9 @@ export class TableComponent extends LitElement {
 
   render() {
     return html`
+      <!-- Breadcrumb dentro de la tabla -->
+      <breadcrumb-component url="/" label="Home"></breadcrumb-component>
+
       <button @click=${this._onCreate}>➕ Crear</button>
       <table>
         <thead>
@@ -53,6 +57,7 @@ export class TableComponent extends LitElement {
     th, td { padding: 0.5rem 1rem; border: 1px solid #ccc; text-align: center; }
     th { background-color: #f0f0f0; }
     button { margin: 0 0.25rem; padding: 0.25rem 0.5rem; cursor: pointer; }
+    breadcrumb-component { display: block; margin-bottom: 1rem; }
   `;
 }
 
