@@ -2,7 +2,7 @@ import { LitElement, css, html } from 'lit';
 
 export class MyButton extends LitElement {
   static properties = {
-    variant: { type: String },  // 'primary', 'secondary', 'danger'
+    variant: { type: String },
     disabled: { type: Boolean },
   };
 
@@ -69,3 +69,5 @@ export class MyButton extends LitElement {
 }
 
 customElements.define('my-button', MyButton);
+
+

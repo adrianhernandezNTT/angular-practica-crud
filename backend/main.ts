@@ -10,10 +10,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const allowedOrigins = [
-    'http://localhost:4200', // Angular dev URL
-    'http://localhost:3000', // Angular dev URL
-    // 'https://example.com',    // Future prod endpoint
-  ];
+  'http://localhost:4200', // Angular dev URL (opcional si no usas Angular)
+  'http://localhost:3000', // Backend (para probar con swagger, opcional)
+  'http://localhost:5173', // Tu frontend Lit + Vite
+];
 
   // Swagger configuration
   const config = new DocumentBuilder()

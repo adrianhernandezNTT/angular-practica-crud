@@ -1,6 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import './components/my-button.js';
 import './components/home/home-component.js';
+import './components/table/table-component.js';
 
 export class MyElement extends LitElement {
   static properties = {
@@ -9,7 +10,6 @@ export class MyElement extends LitElement {
 
   constructor() {
     super();
-    // Detecta si el usuario tiene preferencia por tema oscuro
     this.darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
 
@@ -28,7 +28,7 @@ export class MyElement extends LitElement {
 
       <main>
         <section class="content">
-          <!-- Componente Home -->
+          <!-- Componente Home que contiene la tabla y modal -->
           <home-component></home-component>
 
           <!-- Botones reutilizables -->
@@ -37,15 +37,11 @@ export class MyElement extends LitElement {
             <my-button variant="secondary">Cancelar</my-button>
             <my-button variant="danger" ?disabled=${true}>Eliminar</my-button>
           </div>
-
-          <div class="placeholder">
-            <p>🧱 Zona de componentes CRUD (en construcción)</p>
-          </div>
         </section>
       </main>
 
       <footer>
-        <p>Hecho con ❤️ por <strong>Adrián Hernández</strong> | NTT DATA</p>
+        <p>Hecho por <strong>Adrián Hernández</strong> | NTT DATA</p>
       </footer>
     `;
   }
@@ -104,23 +100,14 @@ export class MyElement extends LitElement {
 
     main {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 3rem 2rem;
+      display: block; /* Cambiado de flex a block para que home-component no se centre extra */
     }
 
     .content {
-      max-width: 800px;
+      max-width: 900px;
+      margin: 0 auto; /* centramos horizontalmente sin afectar vertical */
       text-align: center;
-    }
-
-    .placeholder {
-      margin-top: 2rem;
-      padding: 2rem;
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      background: var(--card-bg);
     }
 
     footer {
@@ -132,7 +119,7 @@ export class MyElement extends LitElement {
       background: var(--footer-bg);
     }
 
-    /* 🌞 Modo claro */
+    /* Modo claro */
     :host(:not([darkMode])) {
       --bg: #f9fafb;
       --text: #1f2937;
@@ -145,7 +132,7 @@ export class MyElement extends LitElement {
       --footer-text: #4b5563;
     }
 
-    /* 🌙 Modo oscuro */
+    /* Modo oscuro */
     :host([darkMode]) {
       --bg: #18181b;
       --text: #e4e4e7;

@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 
 export class BreadcrumbComponent extends LitElement {
   static properties = {
-    items: { type: Array } // ahora recibimos un array de objetos { label, url }
+    items: { type: Array } //recibir un array de objetos { label, url }
   };
 
   constructor() {
